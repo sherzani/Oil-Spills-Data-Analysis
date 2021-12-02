@@ -1,0 +1,67 @@
+# List of all Queries
+
+# Query 1
+# Who are the operators that intentionally released barrels, and how many barrels?
+/*SELECT report_num, operator_name AS "Operator Name", city AS "City", state AS "State", 
+damage_name AS "Damage Type", num_barrels AS "Number of Barrels"
+FROM operators
+JOIN accidents
+	USING (operator_id)
+JOIN accidents_damages
+	USING (report_num)
+JOIN damages
+	USING (damage_id)
+JOIN locations
+	USING (location_id)
+WHERE damage_id=2;
+
+# Query 2
+# How many barrels of oil spilled or were released in December of 2016?
+SELECT report_num, SUM(num_barrels) AS 'Total Barrels Released', location_id
+FROM accidents_damages
+JOIN accidents USING(report_num)
+WHERE accident_dt_tm >= '2016-12-01'
+GROUP BY report_num;
+
+# Query 3
+# What were the totals of the different types of costs from 2016-11-30 to 2016-12-15?
+SELECT accident_dt_tm AS "Accident Date and Time", cost_amount AS "Accident costs"
+FROM accidents
+JOIN accidents_costs
+ON accidents.report_num = accidents_costs.report_num
+WHERE accident_dt_tm BETWEEN '2016-11-30 05:30:00' AND '2016-12-15 13:12:00'
+ORDER By accident_dt_tm;
+SELECT Cost_ID, SUM(Cost_Amount) AS costTotal FROM accidents_costs GROUP BY Cost_ID;
+
+
+# Query 4
+# For each cost type, which reports are the most devastating monetarily? 
+# (devastating as in greater than average for each cost type)
+SELECT DISTINCT report_num, cost_id, cost_amount, avg_cost
+FROM accidents_costs
+JOIN (SELECT cost_id, AVG(cost_amount) as avg_cost FROM accidents_costs GROUP BY cost_id) t2
+USING (cost_id)
+WHERE cost_amount > avg_cost 
+ORDER BY report_num;*/
+
+
+# Query 5
+# What differences are there between accidents below and above average commodity cost?
+SELECT AVG(cost_amount) as avg_CommodityLoss 
+FROM oilSpills.accidents_costs 
+JOIN accidents USING(report_num)
+WHERE cost_id=2;
+
+SELECT report_num AS "Report #", cost_amount AS "Lost Commodity Costs",
+	SUM(cost_amount) AS totalCost
+FROM oilSpills.accidents_costs
+WHERE cost_id=2 AND cost_amount > (SELECT avg_CommodityLoss FROM avg_LostCommodityCost)
+GROUP BY report_num
+ORDER BY totalCost ASC;
+
+SELECT report_num as "Report #", cost_amount AS "Lost Commodity Costs",
+	SUM(cost_amount) AS totalCost
+	FROM oilSpills.accidents_costs
+	WHERE cost_id=2 AND cost_amount < (SELECT avg_CommodityLoss FROM avg_LostCommodityCost)
+GROUP BY report_num
+ORDER BY totalCost DESC;
