@@ -1,5 +1,7 @@
 # Oil-Spills-Data-Analysis
 
+Team: Zainab Sherani, Layo Adewole, Stephen Dziwura, Benjamin Cohn
+
 ## Introduction 
 Oil spills are a major natural disaster. They cause extreme environmental damage, spread pollution which can make people susceptible to diseases such as cancer, and are a huge financial burden. By keeping track of these cases, we have the ability to figure out what might have caused them in the first place and potentially minimize, if not fully prevent the destruction they cause. For these reasons, we designed a database for oil spills. 
 We are using a dataset sponsored by the Department of Transportation called “Oil Pipeline Accidents, 2010 - Present” from Kaggle. The dataset includes each pipeline leak and oil spill that has been reported to the Pipeline and Hazardous Materials Safety Administration from 2010-2017. Here is the link for the full dataset: Oil Spill Accidents (2010-2017).
