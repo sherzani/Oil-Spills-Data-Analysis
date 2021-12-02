@@ -1,7 +1,7 @@
 # List of all Queries
 
 # Query 1
-# Who are the operators that intentionally released barrels, and how many barrels?
+# Which operators released barrels, and how many barrels?
 /*SELECT report_num, operator_name AS "Operator Name", city AS "City", state AS "State", 
 damage_name AS "Damage Type", num_barrels AS "Number of Barrels"
 FROM operators
